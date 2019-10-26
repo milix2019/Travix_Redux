@@ -78,7 +78,7 @@ export default function SearchAppBar() {
           <Typography className={classes.title} variant="h6" noWrap>
             Travix
           </Typography>
-          <Container maxWidth="sm">
+          <Container maxWidth="sm" style={{ padding: "1em" }}>
             <div className={classes.search}>
               <div className={classes.searchIcon}>
                 <SearchIcon />

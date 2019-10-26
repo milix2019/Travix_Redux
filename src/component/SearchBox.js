@@ -24,6 +24,13 @@ const useStyles = makeStyles(theme => ({
   heading: {
     fontSize: theme.typography.pxToRem(15),
   },
+  title: {
+    fontSize: "1.25rem",
+    fontWeight: "500",
+    lineHeight: "1.6",
+    letterSpacing: "0.0075em",
+    color: "rgba(0, 0, 0, 0.54)",
+  },
   secondaryHeading: {
     fontSize: theme.typography.pxToRem(15),
     color: theme.palette.text.secondary,
@@ -47,7 +54,9 @@ const useStyles = makeStyles(theme => ({
     outline: 'none',
     width: '100%',
     height: '100%',
-    resize: 'none'
+    resize: 'none',
+    fontSize: "0.875rem",
+    fontFamily: "Roboto, Helvetica, Arial, sans-serif"
   },
   helper: {
     borderLeft: `2px solid ${theme.palette.divider}`,
@@ -80,7 +89,7 @@ export default function DetailedExpansionPanel() {
         >
           <div className={classes.column}>
             <InputBase
-              className={classes.margin}
+              className={classes.title}
               placeholder={titlePlaceholder}
               inputProps={{ 'aria-label': 'title' }}
             />
@@ -102,9 +111,6 @@ export default function DetailedExpansionPanel() {
         <Divider />
         <ExpansionPanelActions>
           <Button size="small">Cancel</Button>
-          <Button size="small" color="primary">
-            Save
-          </Button>
         </ExpansionPanelActions>
       </ExpansionPanel>
     </div>

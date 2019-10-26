@@ -2,10 +2,12 @@
   "name": "test-candidates",
   "version": "0.0.1",
   "description": "test back - front",
-  "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "dev_server": "node server.js",
+    "watch": "webpack --watch",
+    "start": "webpack-dev-server --mode development --open",
+    "build": "webpack --mode production ./src/index.js --output ./build/bundle.js"
   },
   "keywords": [
     "test",
@@ -15,6 +17,9 @@
   "license": "ISC",
   "dependencies": {
     "@babel/polyfill": "^7.6.0",
+    "@material-ui/core": "^4.5.1",
+    "@material-ui/icons": "^4.5.1",
+    "axios": "^0.19.0",
     "express": "^4.14.0",
     "react": "^16.11.0",
     "react-dom": "^16.11.0",
@@ -25,9 +30,11 @@
     "redux-logger": "^3.0.6",
     "redux-promise": "^0.6.0",
     "redux-thunk": "^2.3.0",
-    "reselect": "^4.0.0"
+    "reselect": "^4.0.0",
+    "universal-cookie": "^4.0.2"
   },
   "devDependencies": {
+    "babel-polyfill": "^6.26.0",
     "@babel/cli": "^7.6.4",
     "@babel/core": "^7.6.4",
     "@babel/plugin-proposal-class-properties": "^7.5.5",

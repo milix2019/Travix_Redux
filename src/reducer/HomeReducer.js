@@ -1,22 +1,37 @@
-import { DASHBOARDLIST_COMPLETED_DATA, DASHBOARDLIST_RECEIEVE_DATA } from '../action/ActionConstant';
+import { GET_NOTE_COMPLETED_DATA, GET_NOTE_RECEIEVE_DATA, CREATE_NOTE_RECEIEVE_DATA, CREATE_NOTE_COMPLETED_DATA } from '../action/ActionConstant';
 
 const initate_state = {
-    loading_dashboardlist_data: true,
-    dashboardlist_data: [],
+    //define state for Get_ALL
+    loading_getnotes: true,
+    getnotes: [],
+    //define state for Create Note
+    loading_createnote: true,
+    createnote: [],
 }
 
-export function fetch_nasa_data_reducer(state = initate_state, action) {
+export function get_notes_reducer(state = initate_state, action) {
     switch (action.type) {
-        case DASHBOARDLIST_RECEIEVE_DATA:
+        case GET_NOTE_RECEIEVE_DATA:
             return Object.assign({}, state, {
                 ...state,
-                loading_dashboardlist_data: true
+                loading_getnotes: true
             })
-        case DASHBOARDLIST_COMPLETED_DATA:
+        case GET_NOTE_COMPLETED_DATA:
             return Object.assign({}, state, {
                 ...state,
-                loading_dashboardlist_data: false,
-                dashboardlist_data: action.dashboardlist_data
+                loading_getnotes: false,
+                getnotes: action.getnotes
+            })
+        case CREATE_NOTE_RECEIEVE_DATA:
+            return Object.assign({}, state, {
+                ...state,
+                loading_createnote: true
+            })
+        case CREATE_NOTE_COMPLETED_DATA:
+            return Object.assign({}, state, {
+                ...state,
+                loading_createnote: false,
+                createnote: action.createnote
             })
         default:
             return state;

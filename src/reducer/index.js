@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux'
-import { fetch_nasa_data_reducer } from './HomeReducer'
+import { get_notes_reducer } from './HomeReducer'
 
-const allReducers =  combineReducers({
-  data:fetch_nasa_data_reducer,
+const allReducers = combineReducers({
+  data: get_notes_reducer,
 })
 export default allReducers

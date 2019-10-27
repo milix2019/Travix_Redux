@@ -1,6 +1,8 @@
-import { selected_dashboardlist_data } from './HomeSelector'
+import { selected_getnotes, selected_createnote } from './HomeSelector'
 
 export const selectors_home = (state) => {
-    const dashboardlist_data = selected_dashboardlist_data(state);
-    return { dashboardlist_data }
+    const getnotes = selected_getnotes(state);
+    const createnote = selected_createnote(state);
+    
+    return { getnotes, createnote }
 }

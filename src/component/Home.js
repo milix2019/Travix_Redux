@@ -2,25 +2,26 @@ import React, { useState, useEffect, Component } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Searchbox from './SearchBox';
-import Card from './Card';
+import CardHolder from './CardHolder';
 
 const useStyles = makeStyles(theme => ({
   root: {
     padding: '4em 1em',
-    paddingBottom: '1em'
+    paddingBottom: '1em',
+    paddingTop: "5em"
   },
 }));
 
 const HomeView = props => {
   const classes = useStyles();
-
-  useEffect(() => {
-    props.fetch_dashboardlist_data();
-  }, []);
+  // useEffect(() => {
+  //   props.fetch_getnotes_data();
+  // }, []);
+  
   return (
     <Container maxWidth="sm" className={classes.root}>
-      <Searchbox />
-      <Card />
+      <Searchbox {...props} />
+      <CardHolder {...props} />
     </Container>
   );
 }

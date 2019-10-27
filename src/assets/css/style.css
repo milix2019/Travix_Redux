@@ -2,3 +2,12 @@ html, body{
     margin: 0px;
     padding:0px;
 }
+
+#root.selected > div:nth-child(2) > div:nth-child(2) > div,
+#root.selected > div:nth-child(2) > div:nth-child(1) {
+    display: none;
+}
+
+#root > div:nth-child(2) > div:nth-child(2) > div.fullscreen {
+    display: block;
+}

@@ -111,7 +111,7 @@ const SearchBox = props => {
   const onCancelClick = (event) => {
     // calling api to create note
     if (title && note) {
-      makeNote();
+      makeNote(title, note);
     } else {
       setSnackFlag(true);
     }

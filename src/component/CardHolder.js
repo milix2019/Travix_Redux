@@ -14,29 +14,48 @@ class CardHolder extends React.Component {
     }
   }
   componentDidMount() {
-    this.props.fetch_getnotes_data();
+    // this.props.fetch_getnotes_data();
   }
   componentWillReceiveProps(props) {
-    if (props.createnote.length > 0) {
-      var joined = props.getnotes.getnotes.concat(props.createnote[0]);
+
+    // TODO: 
+    // check condition for
+    //    delete, create, update & read
+    // state is not updating !!
+
+
+    console.log("deletenote::::", props);
+    if (props.createnote) {
+      var joined = props.getnotes.getnotes.concat(props.createnote);
       this.setState({ notes: joined });
+    } else if (!props.loading_delete) {
+      console.log("deletenote::::", props.deletenote);
     } else {
       this.setState({ notes: props.getnotes.getnotes });
     }
   }
-  onDelete = (index) => {
+  onDelete = (id) => {
     let tt = setTimeout(() => { 
       var array = [...this.state.notes]; // make a separate copy of the array
-      array.splice(index, 1); 
-      if (index !== -1) {      
+
+      var index;
+      array.some(function (note, i) {
+          return note.id === id ? (index = i, true) : false;
+      });
+
+      if (index != -1) {
+        array.splice(index, 1); 
         this.setState({ 
-          notes: array, 
-          snackFlag: false
+          notes: array
          });
-      }
-      console.log("delete"); 
-    }, 5000);
-        
+      };
+      this.setState({ 
+        snackFlag: false
+       });
+       console.log("this.state.notes::::", this.state.notes);
+      this.props.delete_note(id);
+    }, 2000);
+    
     this.setState({ 
       setTime: tt, 
       snackFlag: true,
@@ -52,14 +71,19 @@ class CardHolder extends React.Component {
      //clearning the setTimeout and undo the delete
      clearTimeout(this.state.setTime);
   }
+  onUpdate = (id, title, note) => {
+    console.log("onUpdate");
+    this.props.update_note(id, title, note);
+  }
 
   render() {
     return (
       <div>
         <Snackbar hasAction={this.state.hasAction} onUndo={this.onUndo} message={"Are you sure?"} snackFlag={this.state.snackFlag} />
         {this.state.notes.map((d, index) => {
+          console.log("this.state::::", d);
           if (d != undefined)
-            return <Cards id={index} undo={this.state.undo} onDelete={this.onDelete} key={index} {...d} />
+            return <Cards id={d.id} undo={this.state.undo} onDelete={this.onDelete} onUpdate={this.onUpdate} key={index} {...d} />
         })}
       </div>
     );

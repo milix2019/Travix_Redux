@@ -14,9 +14,9 @@ const useStyles = makeStyles(theme => ({
 
 const HomeView = props => {
   const classes = useStyles();
-  // useEffect(() => {
-  //   props.fetch_getnotes_data();
-  // }, []);
+  useEffect(() => {
+    props.fetch_getnotes_data();
+  }, []);
   
   return (
     <Container maxWidth="sm" className={classes.root}>

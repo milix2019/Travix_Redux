@@ -1,10 +1,11 @@
-import { get, post } from 'axios';
+import axios from 'axios';
 import {
     GET_NOTE_RECEIEVE_DATA, GET_NOTE_COMPLETED_DATA,
     CREATE_NOTE_RECEIEVE_DATA, CREATE_NOTE_COMPLETED_DATA,
     DELETE_NOTE_RECEIEVE_DATA, DELETE_NOTE_COMPLETED_DATA,
     UPDATE_NOTE_RECEIEVE_DATA, UPDATE_NOTE_COMPLETED_DATA
 } from './ActionConstant'
+import config from '../../config';
 
 
 /* This Section is for getting all the data */
@@ -24,8 +25,8 @@ function receive_getnotes_data(data) {
 export function fetch_getnotes_data(d) {
     return function (dispatch) {
         dispatch(request_getnotes_data())
-        return get(`https://api.openaq.org/v1/`).then(
-            response => dispatch(receive_getnotes_data(response.data.results)),
+        return axios.get(`http://localhost:3003/api/tasks`).then(
+            response => dispatch(receive_getnotes_data(response.data && response.data.length > 0 ? response.data.result : [])),
             error => console.log("fail ajax on home page", error)
         )
     }
@@ -45,11 +46,20 @@ function receive_create_notes_data(data) {
     }
 }
 
-export function crete_note(d) {
+export function crete_note(title, note) {
     return function (dispatch) {
         dispatch(request_create_notes_data())
-        return get(`https://api.openaq.org/v1/`).then(
-            response => dispatch(receive_create_notes_data(response.data.results)),
+        return axios.post(`http://localhost:3003/api/tasks`, {
+            headers: {
+                'content-type': 'application/json '
+            }
+        }, {
+            data: {
+                title: title,
+                note: note
+            }
+        }).then(
+            response => dispatch(receive_create_notes_data(response.data.result[0])),
             error => console.log("fail ajax on home page", error)
         )
     }
@@ -69,11 +79,11 @@ function receive_delete_notes_data(data) {
     }
 }
 
-export function delete_note(d) {
+export function delete_note(id) {
     return function (dispatch) {
         dispatch(request_delete__notes_data())
-        return get(`https://api.openaq.org/v1/`).then(
-            response => dispatch(receive_delete_notes_data(response.data.results)),
+        return axios.delete(`http://localhost:3003/api/tasks/` + id).then(
+            response => dispatch(receive_delete_notes_data(response.data.result[0])),
             error => console.log("fail ajax on home page", error)
         )
     }
@@ -94,11 +104,20 @@ function receive_update_notes_data(data) {
     }
 }
 
-export function update_note(d) {
+export function update_note(id, title, note) {
     return function (dispatch) {
         dispatch(request_update__notes_data())
-        return get(`https://api.openaq.org/v1/`).then(
-            response => dispatch(receive_update_notes_data(response.data.results)),
+        return axios.put(`http://localhost:3003/api/tasks/` + id, {
+            headers: {
+                'content-type': 'application/json '
+            }
+        }, {
+            data: {
+                title: title,
+                note: note
+            }
+        }).then(
+            response => dispatch(receive_update_notes_data(response.data.result[0])),
             error => console.log("fail ajax on home page", error)
         )
     }

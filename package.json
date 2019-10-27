@@ -4,7 +4,6 @@
   "description": "test back - front",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev_server": "node server.js",
     "watch": "webpack --watch",
     "start": "webpack-dev-server --mode development --open",
     "build": "webpack --mode production ./src/index.js --output ./build/bundle.js"

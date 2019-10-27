@@ -113,22 +113,38 @@ const Cards = props => {
     const [selected, setSelected] = useState(classes.root);
     const [isExpanded, setExpanded] = useState(false);
     const [readonly, setReadonly] = useState(true);
-    const [title, setTitle] = useState(props.path);
-    const [note, setNote] = useState(props.description);
-    const [listToDelete, setListToDelete] = useState();
+    const [title, setTitle] = useState(props.title);
+    const [note, setNote] = useState(props.note);
+    const [toDelete, setToDelete] = useState(null);
 
 
     useEffect(() => {
         _isOpen = false;
+        console.log(props.undo, toDelete);
         
-        if (props.undo && listToDelete) {
-            listToDelete.d.style = "";
-            listToDelete.dd.style = "";
-            listToDelete.ddd.style = "";
-            
-            listToDelete.dd.style.animationName = "snackbar";
-            listToDelete.dd.style["-webkit-animationName"] = "snackbar";
-        }
+        if (props.undo && toDelete) {
+            toDelete.d.style = "";
+            toDelete.dd.style = "";
+            toDelete.ddd.style = "";            
+            toDelete.dd.style.animationName = "snackbar";
+            toDelete.dd.style["-webkit-animationName"] = "snackbar";
+
+            // setToDelete(null);
+
+        } 
+        
+        // else if (!props.undo && toDelete) {
+        //     toDelete.d.style = "";
+        //     toDelete.dd.style = "";
+        //     toDelete.ddd.style = "";
+
+        //     _isOpen = false;
+        //     document.getElementById("root").className = "";
+        //     setSelected(classes.root);
+        //     setReadonly(true);    
+        //     setExpanded(false);
+        //     // setToDelete(null);
+        // }
     }, [props]);
 
     const onTitleClick = () => {
@@ -148,15 +164,15 @@ const Cards = props => {
 
     const onCancelClick = (event) => {
 
-        if (_isOpen) {
-            console.log("update", title, note);
+        if (_isOpen && (props.title != title || props.note != note)) {
+            console.log("update", title, note, props);
+            props.onUpdate(props.id, title, note);
         }
 
-        setSelected(classes.root);
-        document.getElementById("root").className = "";
-        setReadonly(true);
-
         _isOpen = false;
+        document.getElementById("root").className = "";
+        setSelected(classes.root);
+        setReadonly(true);    
         setExpanded(false);
     };
 
@@ -183,7 +199,7 @@ const Cards = props => {
         ddd.style.margin = 0;
         ddd.style.display = "block";
 
-        setListToDelete({d, dd, ddd});
+        setToDelete({d, dd, ddd});
         _isOpen = true;
         setExpanded(false);
         props.onDelete(props.id);

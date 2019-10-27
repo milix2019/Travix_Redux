@@ -11,12 +11,17 @@ import Chip from '@material-ui/core/Chip';
 import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider';
 import InputBase from '@material-ui/core/InputBase';
+import Snackbar from './Snackbar';
 
 const useStyles = makeStyles(theme => ({
   root: {
     width: '100%',
     paddingTop: '.7em',
     paddingBottom: '1.6em'
+  },
+  panel: {
+    border: "2px solid #ccc",
+    boxShadow: "0px 0px 4px 4px #cccccc52"
   },
   tick: {
     position: 'absolute',
@@ -87,12 +92,14 @@ const SearchBox = props => {
   const [title, setTitle] = useState("");
   const [note, setNote] = useState("");
   const [titlePlaceholder, setTitlePlaceholder] = useState("Take a note...");
+  const [snackFlag, setSnackFlag] = useState(false);
 
   // useEffect(() => {
   //   console.log("kir",props)
   // }, [props]);
 
   const makeNote = () => {
+    // calling action from parents to create note
     props.create_node(title, note);
   };
 
@@ -102,7 +109,17 @@ const SearchBox = props => {
   };
 
   const onCancelClick = (event) => {
-    makeNote();
+    // calling api to create note
+    if (title && note) {
+      makeNote();
+    } else {
+      setSnackFlag(true);
+    }
+
+    setTimeout(() => {
+      setSnackFlag(false);
+    }, 1000);
+
     setTitlePlaceholder("Take a note...");
     setTitle("");
     setNote("");
@@ -110,7 +127,8 @@ const SearchBox = props => {
   };
   return (
     <div className={classes.root}>
-      <ExpansionPanel
+      <Snackbar hasAction={false} message={"Make a note and give it a title..."} snackFlag={snackFlag} />
+      <ExpansionPanel className={classes.panel}
         expanded={isExpanded}>
         <ExpansionPanelSummary
           aria-controls="panel1c-content"
@@ -151,3 +169,4 @@ const SearchBox = props => {
 }
 
 export default SearchBox;
+// console.log(event.target.parentNode.parentNode.parentNode.parentNode);?

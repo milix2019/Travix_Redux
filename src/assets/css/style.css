@@ -11,3 +11,23 @@ html, body{
 #root > div:nth-child(2) > div:nth-child(2) > div.fullscreen {
     display: block;
 }
+
+
+#root > div:nth-child(2) > div:nth-child(2) > div:nth-child(n+2) > div {
+    z-index: 999;
+    opacity: 1;
+    transition: opacity 1s;
+    -webkit-transition: opacity 1s;
+
+    animation-duration: 1s;
+    -webkit-animation-duration: 1s;
+}
+
+@keyframes snackbar {
+    from {background-color: white;}
+    to {background-color: rgb(84, 159, 191);}
+}
+@-webkit-keyframes snackbar {
+    from {background-color: white;}
+    to {background-color: rgb(84, 159, 191);}
+}

@@ -17,14 +17,6 @@ const useStyles = makeStyles(theme => ({
     root: {
         width: '100%',
         paddingBottom: '8px',
-        transition: "height 4s"
-    },
-    rootDelete: {
-        width: '100%',
-        padding: 0,
-        transition: "height 4s",
-        height: '0',
-        zIndex: 0
     },
     panel: {
         border: "1px solid transparent",
@@ -123,10 +115,21 @@ const Cards = props => {
     const [readonly, setReadonly] = useState(true);
     const [title, setTitle] = useState(props.path);
     const [note, setNote] = useState(props.description);
+    const [listToDelete, setListToDelete] = useState();
 
-    // useEffect(() => {
-    //     setStateProps(props);
-    // }, []);
+
+    useEffect(() => {
+        _isOpen = false;
+        
+        if (props.undo && listToDelete) {
+            listToDelete.d.style = "";
+            listToDelete.dd.style = "";
+            listToDelete.ddd.style = "";
+            
+            listToDelete.dd.style.animationName = "snackbar";
+            listToDelete.dd.style["-webkit-animationName"] = "snackbar";
+        }
+    }, [props]);
 
     const onTitleClick = () => {
         if (!_isOpen) {
@@ -144,6 +147,11 @@ const Cards = props => {
     };
 
     const onCancelClick = (event) => {
+
+        if (_isOpen) {
+            console.log("update", title, note);
+        }
+
         setSelected(classes.root);
         document.getElementById("root").className = "";
         setReadonly(true);
@@ -152,9 +160,33 @@ const Cards = props => {
         setExpanded(false);
     };
 
-    const onDelete = (e) => {
-        setSelected(classes.rootDelete);
-        // props.onDelete(props.id);
+    const onDelete = (event) => {
+        let d = event.target.parentNode.parentNode;
+        d.style.minHeight = 0;
+        d.style.height = 0;
+
+        setTimeout(() => {
+            d.style.display = "none";
+        }, 1000);
+
+        let dd = d.parentNode;
+        dd.style.minHeight = 0;
+        dd.style.height = 0;
+        dd.style.padding = 0;
+        dd.style.margin = 0;
+        dd.style.opacity = 0;
+
+        let ddd = dd.parentNode;
+        ddd.style.minHeight = 0;
+        ddd.style.height = 0;
+        ddd.style.padding = 0;
+        ddd.style.margin = 0;
+        ddd.style.display = "block";
+
+        setListToDelete({d, dd, ddd});
+        _isOpen = true;
+        setExpanded(false);
+        props.onDelete(props.id);
     }
 
     return (
@@ -179,7 +211,7 @@ const Cards = props => {
                         />
                     </div>
                     <LightTooltip title="Delete task" placement="top">
-                        <Icon onClick={() => { onDelete() }} className={classes.delete}>delete</Icon>
+                        <Icon onClick={(event) => { onDelete(event) }} className={classes.delete}>delete</Icon>
                     </LightTooltip>
                     <LightTooltip title="Edit task" placement="top">
                         <Icon className={classes.edit}

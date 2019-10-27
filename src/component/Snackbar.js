@@ -19,7 +19,7 @@ const Snack = props => {
 
     useEffect(() => {
         if (props.snackFlag) {
-            let message = "Are you sure?";
+            let message = props.message;
             queueRef.current.push({
                 message,
                 key: new Date().getTime(),
@@ -65,14 +65,14 @@ const Snack = props => {
                     horizontal: 'center',
                 }}
                 open={open}
-                autoHideDuration={6000}
+                autoHideDuration={2000}
                 onClose={handleClose}
                 onExited={handleExited}
                 ContentProps={{
                     'aria-describedby': 'message-id',
                 }}
                 message={<span id="message-id">{messageInfo ? messageInfo.message : undefined}</span>}
-                action={[
+                action={props.hasAction && [
                     <Button key="undo" color="secondary" size="small" onClick={props.onUndo}>
                         UNDO
                     </Button>,

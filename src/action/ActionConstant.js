@@ -1,6 +1,12 @@
-//Action Cons for Fetching data
+//Action Cons for Fetching
 export const GET_NOTE_RECEIEVE_DATA = "GET_NOTE_RECEIEVE_DATA";
 export const GET_NOTE_COMPLETED_DATA = "GET_NOTE_COMPLETED_DATA";
-//Action Cons for Create the data
+//Action Cons for Create
 export const CREATE_NOTE_RECEIEVE_DATA = "CREATE_NOTE_RECEIEVE_DATA";
 export const CREATE_NOTE_COMPLETED_DATA = "CREATE_NOTE_COMPLETED_DATA";
+//Action Cons for Delete 
+export const DELETE_NOTE_RECEIEVE_DATA = "DELETE_NOTE_RECEIEVE_DATA";
+export const DELETE_NOTE_COMPLETED_DATA = "DELETE_NOTE_COMPLETED_DATA";
+//Action Cons for Update 
+export const UPDATE_NOTE_RECEIEVE_DATA = "UPDATE_NOTE_RECEIEVE_DATA";
+export const UPDATE_NOTE_COMPLETED_DATA = "UPDATE_NOTE_COMPLETED_DATA";

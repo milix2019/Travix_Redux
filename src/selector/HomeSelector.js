@@ -24,3 +24,9 @@ export const selected_updatenote = createSelector(
     getnotes,
     data => data.updatenote // you can define here , which part of the init reducer you would like to have i.e data.getnotes
 )
+
+//selector for update
+export const selected_searchnote = createSelector(
+    getnotes,
+    data => data.searchnote // you can define here , which part of the init reducer you would like to have i.e data.getnotes
+)

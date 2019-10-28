@@ -26,7 +26,9 @@ export function fetch_getnotes_data(d) {
     return function (dispatch) {
         dispatch(request_getnotes_data())
         return axios.get(`http://localhost:3003/api/tasks`).then(
-            response => dispatch(receive_getnotes_data(response.data && response.data.length > 0 ? response.data.result : [])),
+            response => {
+                dispatch(receive_getnotes_data(response.data.result));
+            },
             error => console.log("fail ajax on home page", error)
         )
     }

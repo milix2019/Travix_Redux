@@ -104,7 +104,7 @@ const LightTooltip = withStyles(theme => ({
     },
 }))(Tooltip);
 
-let _isOpen = false;
+let _isSnackOpen = false;
 
 const Cards = props => {
     const classes = useStyles();
@@ -115,40 +115,43 @@ const Cards = props => {
     const [readonly, setReadonly] = useState(true);
     const [title, setTitle] = useState(props.title);
     const [note, setNote] = useState(props.note);
-    const [toDelete, setToDelete] = useState(null);
+    const [toDo, setToDo] = useState(null);
 
 
     useEffect(() => {
-        _isOpen = false;
-        console.log(props.undo, toDelete);
-        
-        if (props.undo && toDelete) {
-            toDelete.d.style = "";
-            toDelete.dd.style = "";
-            toDelete.ddd.style = "";            
-            toDelete.dd.style.animationName = "snackbar";
-            toDelete.dd.style["-webkit-animationName"] = "snackbar";
+        console.log(props);
+        let timer;
+        _isSnackOpen = false;
 
-            // setToDelete(null);
+        setTitle(props.title);
+        setNote(props.note);
 
-        } 
-        
-        // else if (!props.undo && toDelete) {
-        //     toDelete.d.style = "";
-        //     toDelete.dd.style = "";
-        //     toDelete.ddd.style = "";
-
-        //     _isOpen = false;
-        //     document.getElementById("root").className = "";
-        //     setSelected(classes.root);
-        //     setReadonly(true);    
-        //     setExpanded(false);
-        //     // setToDelete(null);
-        // }
+        if (toDo) {
+            document.getElementById("root").className = "";
+            clearStyle(document.querySelectorAll("#root > div:nth-child(2) > div:nth-child(2) > div"));
+            clearStyle(document.querySelectorAll("#root > div:nth-child(2) > div:nth-child(2) > div > div"));
+            clearStyle(document.querySelectorAll("#root > div:nth-child(2) > div:nth-child(2) > div > div > div"));
+            toDo.style.animationName = "snackbar";
+            toDo.style["-webkit-animationName"] = "snackbar";
+            setToDo();
+            if (timer) {
+                clearTimeout(timer);
+            }
+            let timer = setTimeout(() => {
+                clearStyle(document.querySelectorAll("#root > div:nth-child(2) > div:nth-child(2) > div > div"));
+            }, 1000);
+        }
     }, [props]);
 
+    const clearStyle = (elems) => {
+        var index = 0, length = elems.length;
+        for (; index < length; index++) {
+            elems[index].style = "";
+        }
+    }
+
     const onTitleClick = () => {
-        if (!_isOpen) {
+        if (!_isSnackOpen) {
             setExpanded(!isExpanded);
         }
     };
@@ -158,49 +161,26 @@ const Cards = props => {
         document.getElementById("root").className = "selected";
         setReadonly(false);
 
-        _isOpen = true;
+        _isSnackOpen = true;
         setExpanded(true);
     };
 
     const onCancelClick = (event) => {
-
-        if (_isOpen && (props.title != title || props.note != note)) {
-            console.log("update", title, note, props);
+        if (_isSnackOpen && (props.title != title || props.note != note)) {
+            console.log("onCancelClick", title, note, props);
+            setToDo(event.target.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode);
             props.onUpdate(props.id, title, note);
         }
-
-        _isOpen = false;
+        _isSnackOpen = false;
         document.getElementById("root").className = "";
         setSelected(classes.root);
-        setReadonly(true);    
+        setReadonly(true);
         setExpanded(false);
     };
 
     const onDelete = (event) => {
-        let d = event.target.parentNode.parentNode;
-        d.style.minHeight = 0;
-        d.style.height = 0;
-
-        setTimeout(() => {
-            d.style.display = "none";
-        }, 1000);
-
-        let dd = d.parentNode;
-        dd.style.minHeight = 0;
-        dd.style.height = 0;
-        dd.style.padding = 0;
-        dd.style.margin = 0;
-        dd.style.opacity = 0;
-
-        let ddd = dd.parentNode;
-        ddd.style.minHeight = 0;
-        ddd.style.height = 0;
-        ddd.style.padding = 0;
-        ddd.style.margin = 0;
-        ddd.style.display = "block";
-
-        setToDelete({d, dd, ddd});
-        _isOpen = true;
+        _isSnackOpen = true;
+        setToDo(event.target.parentNode.parentNode.parentNode);
         setExpanded(false);
         props.onDelete(props.id);
     }

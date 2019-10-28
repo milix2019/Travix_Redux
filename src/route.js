@@ -3,7 +3,7 @@ import {Switch, Route, Redirect} from 'react-router-dom';
 import {HashRouter as Router} from 'react-router-dom';
 import HomeView from './container/HomeContainer';
 import Cookie from 'universal-cookie';
-import Navbar from './component/Navbar';
+import Navbar from './container/NavbarContainer';
 
 // var json = {
 //     token: {

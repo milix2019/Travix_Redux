@@ -1,172 +1,102 @@
-import React, { useState, useEffect, Component } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import clsx from 'clsx';
-import ExpansionPanel from '@material-ui/core/ExpansionPanel';
-import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
-import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
-import ExpansionPanelActions from '@material-ui/core/ExpansionPanelActions';
+import React, {useEffect} from 'react';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
-import Icon from '@material-ui/core/Icon';
-import Chip from '@material-ui/core/Chip';
-import Button from '@material-ui/core/Button';
-import Divider from '@material-ui/core/Divider';
 import InputBase from '@material-ui/core/InputBase';
-import Snackbar from './Snackbar';
+import { fade, makeStyles } from '@material-ui/core/styles';
+import MenuIcon from '@material-ui/icons/Menu';
+import SearchIcon from '@material-ui/icons/Search';
+import Container from '@material-ui/core/Container';
 
 const useStyles = makeStyles(theme => ({
   root: {
-    width: '100%',
-    paddingTop: '.7em',
-    paddingBottom: '1.6em'
+    flexGrow: 1,
   },
-  panel: {
-    border: "2px solid #ccc",
-    boxShadow: "0px 0px 4px 4px #cccccc52"
-  },
-  tick: {
-    position: 'absolute',
-    right: '20px',
-    top: "15px"
-  },
-  heading: {
-    fontSize: theme.typography.pxToRem(15),
+  menuButton: {
+    marginRight: theme.spacing(2),
   },
   title: {
-    fontSize: "1.25rem",
-    fontWeight: "500",
-    lineHeight: "1.6",
-    letterSpacing: "0.0075em",
-    color: "rgba(0, 0, 0, 0.54)",
-    display: 'flex',
-    flex: 1,
-  },
-  secondaryHeading: {
-    fontSize: theme.typography.pxToRem(15),
-    color: theme.palette.text.secondary,
-  },
-  icon: {
-    verticalAlign: 'bottom',
-    height: 20,
-    width: 20,
-  },
-  details: {
-    alignItems: 'center',
-  },
-  column: {
-    flexBasis: '33.33%',
-    display: 'flex',
-    flex: 1,
-    paddingRight: '4.4em'
-  },
-  column100: {
-    width: '100%',
-  },
-  textarea: {
-    border: 'none',
-    outline: 'none',
-    width: '100%',
-    height: '100%',
-    resize: 'none',
-    fontSize: "0.875rem",
-    fontFamily: "Roboto, Helvetica, Arial, sans-serif"
-  },
-  helper: {
-    borderLeft: `2px solid ${theme.palette.divider}`,
-    padding: theme.spacing(1, 2),
-  },
-  link: {
-    color: theme.palette.primary.main,
-    textDecoration: 'none',
-    '&:hover': {
-      textDecoration: 'underline',
+    flexGrow: 1,
+    display: 'none',
+    position:'absolute',
+    [theme.breakpoints.up('sm')]: {
+      display: 'block',
     },
+  },
+  search: {
+    position: 'relative',
+    borderRadius: theme.shape.borderRadius,
+    backgroundColor: fade(theme.palette.common.white, 0.15),
+    '&:hover': {
+      backgroundColor: fade(theme.palette.common.white, 0.25),
+    },
+    marginLeft: "0 !important",
+    width: '100%',
+    [theme.breakpoints.up('sm')]: {
+      marginLeft: theme.spacing(1),
+      width: 'auto',
+    },
+  },
+  searchIcon: {
+    width: theme.spacing(7),
+    height: '100%',
+    position: 'absolute',
+    pointerEvents: 'none',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  inputRoot: {
+    color: 'inherit',
+    width: "100%"
+  },
+  inputInput: {
+    padding: theme.spacing(1, 1, 1, 7),
+    transition: theme.transitions.create('width'),
+    width: '100%',
+    [theme.breakpoints.up('sm')]: {
+      width: "100%",
+      '&:focus': {
+        width: "100%",
+      },
+    },
+  },
+  appBar: {
+    top: 'auto',
+    top: 0,
   },
 }));
 
+const Navbar = props => {
 
-const SearchBox = props => {
-  // console.log("SearchBox", props);
+  console.log("navbar 0", props);
+
+  useEffect(() => {
+    console.log("navbar 1", props);
+  }, [props]);
+  
+
   const classes = useStyles();
 
-  const [isExpanded, setExpanded] = useState(false);
-  const [title, setTitle] = useState("");
-  const [note, setNote] = useState("");
-  const [titlePlaceholder, setTitlePlaceholder] = useState("Take a note...");
-  const [snackFlag, setSnackFlag] = useState(false);
-
-  // useEffect(() => {
-  //   console.log("kir",props)
-  // }, [props]);
-
-  const makeNote = () => {
-    // calling action from parents to create note
-    props.create_node(title, note);
-  };
-
-  const onTitleClick = () => {
-    setTitlePlaceholder("Title")
-    setExpanded(true);
-  };
-
-  const onCancelClick = (event) => {
-    // calling api to create note
-    if (title && note) {
-      makeNote(title, note);
-    } else {
-      setSnackFlag(true);
-    }
-
-    setTimeout(() => {
-      setSnackFlag(false);
-    }, 1000);
-
-    setTitlePlaceholder("Take a note...");
-    setTitle("");
-    setNote("");
-    setExpanded(false);
-  };
   return (
-    <div className={classes.root}>
-      <Snackbar hasAction={false} message={"Make a note and give it a title..."} snackFlag={snackFlag} />
-      <ExpansionPanel className={classes.panel}
-        expanded={isExpanded}>
-        <ExpansionPanelSummary
-          aria-controls="panel1c-content"
-          id="panel1c-header"
-          onClick={(event) => { onTitleClick() }}
-        >
-          <div className={classes.column}>
-            <InputBase
-              value={title}
-              className={classes.title}
-              placeholder={titlePlaceholder}
-              inputProps={{ 'aria-label': 'title' }}
-              onChange={(e) => { setTitle(e.target.value) }}
-            />
+      <Container maxWidth="sm" style={{ padding: "0.5em 1em" }}>
+          <div className={classes.search}>
+              <div className={classes.searchIcon}>
+                  <SearchIcon />
+              </div>
+              <InputBase
+                  placeholder="Search Title or Content"
+                  onChange={(event)=>props.onSearch(event)}
+                  classes={{
+                      root: classes.inputRoot,
+                      input: classes.inputInput,
+                  }}
+                  inputProps={{ 'aria-label': 'search' }}
+              />
           </div>
-          <Icon className={classes.tick}>check</Icon>
-        </ExpansionPanelSummary>
-        <ExpansionPanelDetails className={classes.details}>
-          <div className={classes.column100}>
-            <textarea className={classes.textarea}
-              value={note}
-              placeholder="Write here..."
-              id="names"
-              name="hard"
-              rows={10}
-              wrap="hard"
-              onChange={(e) => { setNote(e.target.value) }}>
-            </textarea>
-          </div>
-        </ExpansionPanelDetails>
-        <Divider />
-        <ExpansionPanelActions>
-          <Button size="small" onClick={(event) => { onCancelClick(event) }}>Close</Button>
-        </ExpansionPanelActions>
-      </ExpansionPanel>
-    </div>
+      </Container>
   );
 }
 
-export default SearchBox;
-// console.log(event.target.parentNode.parentNode.parentNode.parentNode);?
+export default Navbar;

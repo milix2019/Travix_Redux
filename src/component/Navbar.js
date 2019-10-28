@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
@@ -68,7 +68,15 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function SearchAppBar() {
+const Navbar = props => {
+
+  console.log("navbar 0", props);
+
+  useEffect(() => {
+    console.log("navbar 1", props);
+  }, [props]);
+  
+
   const classes = useStyles();
 
   return (
@@ -78,7 +86,7 @@ export default function SearchAppBar() {
           <Typography className={classes.title} variant="h6" noWrap>
             Travix
           </Typography>
-          <Container maxWidth="sm" style={{ padding: "1em" }}>
+          {/* <Container maxWidth="sm" style={{ padding: "1em" }}>
             <div className={classes.search}>
               <div className={classes.searchIcon}>
                 <SearchIcon />
@@ -92,9 +100,11 @@ export default function SearchAppBar() {
                 inputProps={{ 'aria-label': 'search' }}
               />
             </div>
-          </Container>
+          </Container> */}
         </Toolbar>
       </AppBar>
     </div>
   );
 }
+
+export default Navbar;

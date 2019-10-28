@@ -1,0 +1,32 @@
+{
+  "name": "your_app_name",
+  "version": "1.0.0",
+  "description": "YOUR_DESCRIPTION",
+  "main": "server.js",
+  "scripts": {
+    "pre-start": "node ./helpers/initialize.js",
+    "start": "node server.js",
+    "test": "mocha --recursive ./test --timeout 10000 --exit"
+  },
+  "author": "YOUR_NAME",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "chalk": "^2.4.2",
+    "compression": "^1.7.4",
+    "dotenv": "^7.0.0",
+    "errorhandler": "^1.5.1",
+    "express": "^4.17.1",
+    "express-status-monitor": "^1.2.7",
+    "express-validator": "^5.3.1",
+    "fs": "0.0.1-security",
+    "urlencode": "^1.1.0",
+    "winston": "^3.2.1"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "chai-http": "^4.3.0",
+    "mocha": "^5.2.0",
+    "sinon": "^7.5.0"
+  }
+}

@@ -1,0 +1,20 @@
+image: atlassian/default-image:2
+pipelines:
+  default:
+    - step:
+        script:          
+          - npm i
+          - npm i mocha -g
+          #- npm test                    
+    - step:
+            deployment: staging
+            trigger: manual
+            image: atlassian/default-image:2
+            script:
+              - ssh -t dev@209.97.164.46  "sh /home/dev/deploy-dashboard-api.sh" 
+    - step:
+            deployment: production
+            trigger: manual
+            image: atlassian/default-image:2
+            script:
+              - ssh -t deploy@209.97.164.46  "sh /home/deploy/dev/deploy-dashboard-api.sh" 

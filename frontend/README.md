@@ -36,6 +36,21 @@ npm start
 > webpack-dev-server --mode development --open
 
 ```
+* Running eslint 
+Currently the eslint is pointing to ./src/component/**
+
+```
+npm run lint
+```
+
+* sample output
+```
+> test-candidates@0.0.1 lint C:\Users\milim\Desktop\Travix\Travix_Redux\frontend
+> eslint ./src/component/**
+✖ 3 problems (0 errors, 3 warnings)
+```
+
+
 
 * Running/Building using Webpack
 

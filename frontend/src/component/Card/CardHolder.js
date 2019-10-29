@@ -1,14 +1,15 @@
-import React, { Component } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
+import axios from 'axios';
 import Cards from './Cards';
 import Snackbar from '../Snackbar';
-import axios from 'axios';
 import SearchBox from '../SearchBox';
 
-/* 
+/*
   This is container which hold afew things,
   Card Holder, Cards and Toster (Snakbar),
   the magic being done in Card,
-  which We pass all the data to the components and we build the cards there 
+  which We pass all the data to the components and we build the cards there
 */
 
 class CardHolder extends React.Component {
@@ -20,136 +21,162 @@ class CardHolder extends React.Component {
       textToSearch: "",
       snackFlag: false,
       setTime: '',
-      hasAction: true
-    }
+      hasAction: true,
+    };
   }
+
   componentDidMount() {
-    /* 
+    /*
       Calling Ajax (as props from parent) to Fetch all notes and update store
     */
     this.props.fetch_getnotes_data();
   }
+
   componentWillReceiveProps(props) {
-    /* 
+    /*
       If any new note has been created,
       here will be fired , then we append the create note and update the state
     */
-    if (props.createData.length != 0) {
-      var joined = this.state.notes.concat(props.createData);
+    if (props.createData.length !== 0) {
+      const joined = [props.createData, ...this.state.notes];
       this.setState({ notes: joined });
     } else {
       this.setState({ notes: props.getnotes.getnotes });
     }
   }
-  onDelete = (id) => {
-    let timer = setTimeout(() => {
-      var array = [...this.state.notes]; // make a separate copy of the array
 
-      var index;
-      array.some(function (note, i) {
+  onDelete = (id) => {
+    const timer = setTimeout(() => {
+      const array = [...this.state.notes]; // make a separate copy of the array
+
+      let index;
+      array.some((note, i) => {
         return note.id === id ? (index = i, true) : false;
       });
 
-      if (index != -1) {
-        this.deleteNote(id).then(res => {
+      if (index !== -1) {
+        this.deleteNote(id).then((res) => {
           if (res.success) {
             array.splice(index, 1);
             this.setState({
-              notes: array
+              notes: array,
             });
           }
-        }).catch(function (error) {
+        }).catch((error) => {
           // handle error
           console.log(error);
-        })
-      };
+        });
+      }
+
       this.setState({
-        snackFlag: false
+        snackFlag: false,
       });
     }, 2000);
 
     this.setState({
       setTime: timer,
-      snackFlag: true
+      snackFlag: true,
     });
   }
-  /* 
+  /*
     Calling async Axios in order to wait until the note has been deleted,
     then we will update the state
   */
+
   deleteNote = async (id) => {
-    let res = await axios.delete(`http://localhost:3003/api/tasks/` + id);
+    const res = await axios.delete(`http://localhost:3003/api/tasks/${id}`);
     return res.data;
   };
+
   onUndo = () => {
     this.setState({
       snackFlag: false,
-      deleted: false
     });
-    //clearning the setTimeout and undo the delete
+    // clearning the setTimeout and undo the delete
     clearTimeout(this.state.setTime);
   }
+
   onUpdate = (id, title, note) => {
-    var array = [...this.state.notes]; // make a separate copy of the array
-    var index;
-    array.some(function (note, i) {
-      return note.id === id ? (index = i, true) : false;
+    const array = [...this.state.notes]; // make a separate copy of the array
+    let index;
+    array.some((n, i) => {
+      // eslint-disable-next-line no-return-assign
+      return n.id === id ? (index = i, true) : false;
     });
 
-    let that = this;
+    const that = this;
 
-    this.updateNote(id, title, note).then(function (res) {
+    this.updateNote(id, title, note).then(() => {
       array[index].title = title;
       array[index].note = note;
       that.setState({
-        notes: array
+        notes: array,
       });
-    }).catch(function (error) {
+    }).catch((error) => {
       // handle error
       console.log(error);
-    })
+    });
   }
-  /* 
+  /*
     Update the Notes , then we will update the state
   */
+
   updateNote = async (id, title, note) => {
-    let res = await axios.put(`http://localhost:3003/api/tasks/` + id, {
+    const res = await axios.put(`http://localhost:3003/api/tasks/${id}`, {
       headers: {
-        'content-type': 'application/json '
-      }
+        'content-type': 'application/json',
+      },
     }, {
       data: {
         title: title,
-        note: note
-      }
+        note: note,
+      },
     });
     return res.data;
   };
+
   onSearch = (event) => {
-    var textToSearch = event.target.value;
-    var array = [...this.state.notes].filter((note) => { return textToSearch.length === 0 || note.title.includes(textToSearch) || note.note.includes(textToSearch); });
+    const textToSearch = event.target.value;
+    const array = [...this.state.notes].filter((note) => {
+      return textToSearch.length === 0
+      || note.title.includes(textToSearch)
+      || note.note.includes(textToSearch);
+    });
     this.setState({
       notesSearch: array,
-      textToSearch: textToSearch
+      textToSearch: textToSearch,
     });
   };
 
   render() {
-    
-    const data = this.state.textToSearch.length == 0 && this.state.notesSearch.length === 0 ? this.state.notes: this.state.notesSearch;    
+    const data = this.state.textToSearch.length === 0
+    && this.state.notesSearch.length === 0 ? this.state.notes : this.state.notesSearch;
     return (
       <div>
         <SearchBox onSearch={this.onSearch} />
-        <Snackbar hasAction={this.state.hasAction} onUndo={this.onUndo} message={"Are you sure?"} snackFlag={this.state.snackFlag} />
-        { data != undefined &&
-          data.length > 0 &&
-          data.map((d, index) => {
-            if (d != undefined)
-              return <Cards id={d.id} onDelete={this.onDelete} onUpdate={this.onUpdate} key={index} {...d} />
-          })}
+        <Snackbar hasAction={this.state.hasAction} onUndo={this.onUndo} message="Are you sure?" snackFlag={this.state.snackFlag} />
+        { data !== undefined
+        && data.length > 0
+        && data.map((d) => {
+          if (d !== undefined) {
+            // eslint-disable-next-line max-len
+            return <Cards id={d.id} onDelete={this.onDelete} onUpdate={this.onUpdate} key={d.id} {...d} />;
+          }
+        })}
       </div>
     );
   }
 }
 
+CardHolder.propTypes = {
+  fetch_getnotes_data: PropTypes.func,
+  createData: PropTypes.any,
+  getnotes: PropTypes.any,
+};
+
+CardHolder.defaultProps = {
+  fetch_getnotes_data: null,
+  createData: null,
+  getnotes: null,
+};
 export default CardHolder;

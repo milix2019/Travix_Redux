@@ -1,28 +1,31 @@
-import React, { useState, useEffect, Component } from 'react';
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
-import clsx from 'clsx';
-import { ExpansionPanel, ExpansionPanelDetails, ExpansionPanelSummary, ExpansionPanelActions, Icon, Button, Divider, InputBase } from '@material-ui/core';
+import {
+  ExpansionPanel, ExpansionPanelDetails, ExpansionPanelSummary, ExpansionPanelActions, Icon,
+  Button, Divider, InputBase,
+} from '@material-ui/core';
 import Snackbar from './Snackbar';
 
-/* 
+/*
   This container will create the cards based on the close click ,
   close btn is kind of dynamic, which will save the data if title and note are being made
 */
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
     paddingTop: '.7em',
-    paddingBottom: '1.6em'
+    paddingBottom: '1.6em',
   },
   panel: {
     border: "2px solid #ccc",
-    boxShadow: "0px 0px 4px 4px #cccccc52"
+    boxShadow: "0px 0px 4px 4px #cccccc52",
   },
   tick: {
     position: 'absolute',
     right: '20px',
-    top: "15px"
+    top: "15px",
   },
   heading: {
     fontSize: theme.typography.pxToRem(15),
@@ -52,7 +55,7 @@ const useStyles = makeStyles(theme => ({
     flexBasis: '33.33%',
     display: 'flex',
     flex: 1,
-    paddingRight: '4.4em'
+    paddingRight: '4.4em',
   },
   column100: {
     width: '100%',
@@ -64,7 +67,7 @@ const useStyles = makeStyles(theme => ({
     height: '100%',
     resize: 'none',
     fontSize: "0.875rem",
-    fontFamily: "Roboto, Helvetica, Arial, sans-serif"
+    fontFamily: "Roboto, Helvetica, Arial, sans-serif",
   },
   helper: {
     borderLeft: `2px solid ${theme.palette.divider}`,
@@ -79,7 +82,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const AddBox = props => {
+const AddBox = (props) => {
   const classes = useStyles();
 
   const [isExpanded, setExpanded] = useState(false);
@@ -88,7 +91,7 @@ const AddBox = props => {
   const [titlePlaceholder, setTitlePlaceholder] = useState("Take a note...");
   const [snackFlag, setSnackFlag] = useState(false);
 
-  /* 
+  /*
     calling action from parents to create note
   */
   const makeNote = () => {
@@ -96,11 +99,11 @@ const AddBox = props => {
   };
 
   const onTitleClick = () => {
-    setTitlePlaceholder("Title")
+    setTitlePlaceholder("Title");
     setExpanded(true);
   };
 
-  const onCancelClick = (event) => {
+  const onCancelClick = () => {
     if (title && note) {
       makeNote(title, note);
     } else {
@@ -118,13 +121,15 @@ const AddBox = props => {
   };
   return (
     <div className={classes.root}>
-      <Snackbar hasAction={false} message={"Make a note and give it a title..."} snackFlag={snackFlag} />
-      <ExpansionPanel className={classes.panel}
-        expanded={isExpanded}>
+      <Snackbar hasAction={false} message="Make a note and give it a title..." snackFlag={snackFlag} />
+      <ExpansionPanel
+        className={classes.panel}
+        expanded={isExpanded}
+      >
         <ExpansionPanelSummary
           aria-controls="panel1c-content"
           id="panel1c-header"
-          onClick={(event) => { onTitleClick() }}
+          onClick={() => { onTitleClick(); }}
         >
           <div className={classes.column}>
             <InputBase
@@ -132,31 +137,41 @@ const AddBox = props => {
               className={classes.title}
               placeholder={titlePlaceholder}
               inputProps={{ 'aria-label': 'title' }}
-              onChange={(e) => { setTitle(e.target.value) }}
+              onChange={(e) => { setTitle(e.target.value); }}
             />
           </div>
           <Icon className={classes.tick}>check</Icon>
         </ExpansionPanelSummary>
         <ExpansionPanelDetails className={classes.details}>
           <div className={classes.column100}>
-            <textarea className={classes.textarea}
+            <textarea
+              className={classes.textarea}
               value={note}
               placeholder="Write here..."
               id="names"
               name="hard"
               rows={10}
               wrap="hard"
-              onChange={(e) => { setNote(e.target.value) }}>
-            </textarea>
+              onChange={(e) => { setNote(e.target.value); }}
+            />
           </div>
         </ExpansionPanelDetails>
         <Divider />
         <ExpansionPanelActions>
-          <Button size="small" onClick={(event) => { onCancelClick(event) }}>Close</Button>
+          <Button size="small" onClick={(event) => { onCancelClick(event); }}>Close</Button>
         </ExpansionPanelActions>
       </ExpansionPanel>
     </div>
   );
-}
+};
+
+
+AddBox.propTypes = {
+  createNote: PropTypes.func,
+};
+
+AddBox.defaultProps = {
+  createNote: null,
+};
 
 export default AddBox;

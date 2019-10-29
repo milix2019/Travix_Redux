@@ -1,8 +1,8 @@
-import React, {useEffect} from 'react';
-import {AppBar, Toolbar, Typography } from '@material-ui/core';
+import React from 'react';
+import { AppBar, Toolbar, Typography } from '@material-ui/core';
 import { fade, makeStyles } from '@material-ui/core/styles';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
   },
@@ -12,7 +12,7 @@ const useStyles = makeStyles(theme => ({
   title: {
     flexGrow: 1,
     display: 'none',
-    position:'absolute',
+    position: 'absolute',
     [theme.breakpoints.up('sm')]: {
       display: 'block',
     },
@@ -42,7 +42,7 @@ const useStyles = makeStyles(theme => ({
   },
   inputRoot: {
     color: 'inherit',
-    width: "100%"
+    width: "100%",
   },
   inputInput: {
     padding: theme.spacing(1, 1, 1, 7),
@@ -56,12 +56,11 @@ const useStyles = makeStyles(theme => ({
     },
   },
   appBar: {
-    top: 'auto',
     top: 0,
   },
 }));
 
-const Navbar = props => {
+const Navbar = () => {
   const classes = useStyles();
 
   return (
@@ -75,6 +74,6 @@ const Navbar = props => {
       </AppBar>
     </div>
   );
-}
+};
 
 export default Navbar;

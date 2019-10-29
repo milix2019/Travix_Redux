@@ -1,0 +1,47 @@
+{
+    "env": {
+        "browser": true,
+        "es6": true
+    },
+    "extends": [
+        "airbnb"
+    ],
+    "globals": {
+        "Atomics": "readonly",
+        "SharedArrayBuffer": "readonly"
+    },
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+        "ecmaFeatures": {
+            "jsx": true
+        },
+        "ecmaVersion": 2018,
+        "sourceType": "module"
+    },
+    "plugins": [
+        "react",
+        "@typescript-eslint"
+    ],
+    "rules": {
+        "semi": ["error", "always"],
+        "quotes": [0, "double"],
+        "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+        "camelcase": "off",
+        "react/jsx-props-no-spreading": "off",
+        "no-underscore-dangle": "off",
+        "no-plusplus": "off",
+        "linebreak-style": 0,
+        "global-require": 0,
+        "arrow-body-style" : "off",
+        "array-callback-return" : "off",
+        "consistent-return" : "off",
+        "react/no-access-state-in-setstate" : "off",
+        "react/destructuring-assignment" : "off",
+        "react/forbid-prop-types" : "off",
+        "object-shorthand" : "off",
+        "no-param-reassign" : "off",
+        "prefer-destructuring": "off",
+        "no-return-assign": "off",
+        "react/no-deprecated": "off"
+    }
+}

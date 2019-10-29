@@ -138,8 +138,6 @@ exports.delete = (req, res) => {
             };
             return failed(res, err, config.action.DELETE)
         });
-
-        success(res, [task], config.action.DELETE)
     } else {
         var err = {
             status: config.statusCode.NOT_FOUNF,

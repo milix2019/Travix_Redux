@@ -41,7 +41,7 @@ html, body{
     margin-left: -16px;
 }
 #root > div:nth-child(2) > div:nth-child(2) > div:first-child > div:first-child {
-    height: 48px;
+    height: 45px;
 }
 #root > div:nth-child(2) > div:nth-child(2) > div:first-child input {
     height: 33px;

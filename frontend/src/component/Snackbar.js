@@ -11,7 +11,10 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-
+/* 
+    This is the shared (dynamic) component layout which being calling in afew part of the code
+    which is for OnDelete the note and give notification if its empty
+*/
 const Snack = props => {
     const queueRef = React.useRef([]);
     const [open, setOpen] = React.useState(false);
@@ -61,7 +64,7 @@ const Snack = props => {
             <Snackbar
                 key={messageInfo ? messageInfo.key : undefined}
                 anchorOrigin={{
-                    vertical: 'top',
+                    vertical: 'bottom',
                     horizontal: 'center',
                 }}
                 open={open}

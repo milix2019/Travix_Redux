@@ -1,17 +1,11 @@
 import React, { useState, useEffect, Component } from 'react';
 import { withStyles, makeStyles } from '@material-ui/core/styles';
-import clsx from 'clsx';
-import ExpansionPanel from '@material-ui/core/ExpansionPanel';
-import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
-import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
-import ExpansionPanelActions from '@material-ui/core/ExpansionPanelActions';
-import Typography from '@material-ui/core/Typography';
-import Icon from '@material-ui/core/Icon';
-import Chip from '@material-ui/core/Chip';
-import Button from '@material-ui/core/Button';
-import Divider from '@material-ui/core/Divider';
-import InputBase from '@material-ui/core/InputBase';
-import Tooltip from '@material-ui/core/Tooltip';
+import {ExpansionPanel, ExpansionPanelDetails, ExpansionPanelSummary, ExpansionPanelActions, Typography, Icon, Chip, Button, Divider, InputBase, Tooltip} from '@material-ui/core';
+
+/* 
+    This container will make the cards based on the parents state,
+    here we receive the data as props and start building them 
+*/
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -119,8 +113,11 @@ const Cards = props => {
 
 
     useEffect(() => {
-        console.log(props);
-        let timer;
+        /* 
+            The logic of Collapsing, adding the style, blinking the cards (color), readonly
+            is being done based on the various flags that we have defined from parents,
+            then in this section we control it and make it happen  
+        */
         _isSnackOpen = false;
 
         setTitle(props.title);
@@ -167,7 +164,6 @@ const Cards = props => {
 
     const onCancelClick = (event) => {
         if (_isSnackOpen && (props.title != title || props.note != note)) {
-            console.log("onCancelClick", title, note, props);
             setToDo(event.target.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode);
             props.onUpdate(props.id, title, note);
         }
@@ -192,7 +188,7 @@ const Cards = props => {
                 <ExpansionPanelSummary
                     aria-controls="panel1c-content"
                     id="panel1c-header"
-                    onClick={(event) => { onTitleClick() }}
+                    onClick={() => { onTitleClick() }}
                 >
                     <div className={classes.column}>
                         <InputBase

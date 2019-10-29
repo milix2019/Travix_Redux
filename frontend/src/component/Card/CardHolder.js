@@ -1,9 +1,15 @@
 import React, { Component } from 'react';
 import Cards from './Cards';
-import Snackbar from './Snackbar';
+import Snackbar from '../Snackbar';
 import axios from 'axios';
-import SearchBox from './SearchBox';
+import SearchBox from '../SearchBox';
 
+/* 
+  This is container which hold afew things,
+  Card Holder, Cards and Toster (Snakbar),
+  the magic being done in Card,
+  which We pass all the data to the components and we build the cards there 
+*/
 
 class CardHolder extends React.Component {
   constructor(props) {
@@ -18,22 +24,20 @@ class CardHolder extends React.Component {
     }
   }
   componentDidMount() {
+    /* 
+      Calling Ajax (as props from parent) to Fetch all notes and update store
+    */
     this.props.fetch_getnotes_data();
   }
   componentWillReceiveProps(props) {
-
-    // TODO: 
-    // check condition for
-    //    delete, create, update & read
-    // state is not updating !!
-
-
+    /* 
+      If any new note has been created,
+      here will be fired , then we append the create note and update the state
+    */
     if (props.createData.length != 0) {
-      console.log("iff");
       var joined = this.state.notes.concat(props.createData);
       this.setState({ notes: joined });
     } else {
-      console.log("elsee");
       this.setState({ notes: props.getnotes.getnotes });
     }
   }
@@ -62,7 +66,6 @@ class CardHolder extends React.Component {
       this.setState({
         snackFlag: false
       });
-      //this.props.delete_note(id);
     }, 2000);
 
     this.setState({
@@ -70,12 +73,15 @@ class CardHolder extends React.Component {
       snackFlag: true
     });
   }
+  /* 
+    Calling async Axios in order to wait until the note has been deleted,
+    then we will update the state
+  */
   deleteNote = async (id) => {
     let res = await axios.delete(`http://localhost:3003/api/tasks/` + id);
     return res.data;
   };
   onUndo = () => {
-    console.log("onUndo");
     this.setState({
       snackFlag: false,
       deleted: false
@@ -84,7 +90,6 @@ class CardHolder extends React.Component {
     clearTimeout(this.state.setTime);
   }
   onUpdate = (id, title, note) => {
-    console.log("onUpdate");
     var array = [...this.state.notes]; // make a separate copy of the array
     var index;
     array.some(function (note, i) {
@@ -104,6 +109,9 @@ class CardHolder extends React.Component {
       console.log(error);
     })
   }
+  /* 
+    Update the Notes , then we will update the state
+  */
   updateNote = async (id, title, note) => {
     let res = await axios.put(`http://localhost:3003/api/tasks/` + id, {
       headers: {
@@ -118,12 +126,8 @@ class CardHolder extends React.Component {
     return res.data;
   };
   onSearch = (event) => {
-    console.log("onSearch", event.target.value);
-
     var textToSearch = event.target.value;
     var array = [...this.state.notes].filter((note) => { return textToSearch.length === 0 || note.title.includes(textToSearch) || note.note.includes(textToSearch); });
-    console.log(array);
-    
     this.setState({
       notesSearch: array,
       textToSearch: textToSearch
@@ -131,6 +135,7 @@ class CardHolder extends React.Component {
   };
 
   render() {
+    
     const data = this.state.textToSearch.length == 0 && this.state.notesSearch.length === 0 ? this.state.notes: this.state.notesSearch;    
     return (
       <div>

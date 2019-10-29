@@ -1,13 +1,6 @@
 import React, {useEffect} from 'react';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import IconButton from '@material-ui/core/IconButton';
-import Typography from '@material-ui/core/Typography';
-import InputBase from '@material-ui/core/InputBase';
+import {AppBar, Toolbar, Typography } from '@material-ui/core';
 import { fade, makeStyles } from '@material-ui/core/styles';
-import MenuIcon from '@material-ui/icons/Menu';
-import SearchIcon from '@material-ui/icons/Search';
-import Container from '@material-ui/core/Container';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -69,14 +62,6 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const Navbar = props => {
-
-  console.log("navbar 0", props);
-
-  useEffect(() => {
-    console.log("navbar 1", props);
-  }, [props]);
-  
-
   const classes = useStyles();
 
   return (
@@ -86,21 +71,6 @@ const Navbar = props => {
           <Typography className={classes.title} variant="h6" noWrap>
             Travix
           </Typography>
-          {/* <Container maxWidth="sm" style={{ padding: "1em" }}>
-            <div className={classes.search}>
-              <div className={classes.searchIcon}>
-                <SearchIcon />
-              </div>
-              <InputBase
-                placeholder="Search…"
-                classes={{
-                  root: classes.inputRoot,
-                  input: classes.inputInput,
-                }}
-                inputProps={{ 'aria-label': 'search' }}
-              />
-            </div>
-          </Container> */}
         </Toolbar>
       </AppBar>
     </div>

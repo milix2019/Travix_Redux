@@ -1,17 +1,13 @@
 import React, { useState, useEffect, Component } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
-import ExpansionPanel from '@material-ui/core/ExpansionPanel';
-import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
-import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
-import ExpansionPanelActions from '@material-ui/core/ExpansionPanelActions';
-import Typography from '@material-ui/core/Typography';
-import Icon from '@material-ui/core/Icon';
-import Chip from '@material-ui/core/Chip';
-import Button from '@material-ui/core/Button';
-import Divider from '@material-ui/core/Divider';
-import InputBase from '@material-ui/core/InputBase';
+import { ExpansionPanel, ExpansionPanelDetails, ExpansionPanelSummary, ExpansionPanelActions, Icon, Button, Divider, InputBase } from '@material-ui/core';
 import Snackbar from './Snackbar';
+
+/* 
+  This container will create the cards based on the close click ,
+  close btn is kind of dynamic, which will save the data if title and note are being made
+*/
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -83,9 +79,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-
 const AddBox = props => {
-  // console.log("SearchBox", props);
   const classes = useStyles();
 
   const [isExpanded, setExpanded] = useState(false);
@@ -94,14 +88,11 @@ const AddBox = props => {
   const [titlePlaceholder, setTitlePlaceholder] = useState("Take a note...");
   const [snackFlag, setSnackFlag] = useState(false);
 
-  // useEffect(() => {
-  //   console.log("kir",props)
-  // }, [props]);
-
+  /* 
+    calling action from parents to create note
+  */
   const makeNote = () => {
-    // calling action from parents to create note
     props.createNote(title, note);
-    //props.create_node(title, note);
   };
 
   const onTitleClick = () => {
@@ -110,7 +101,6 @@ const AddBox = props => {
   };
 
   const onCancelClick = (event) => {
-    // calling api to create note
     if (title && note) {
       makeNote(title, note);
     } else {
@@ -170,4 +160,3 @@ const AddBox = props => {
 }
 
 export default AddBox;
-// console.log(event.target.parentNode.parentNode.parentNode.parentNode);?

@@ -1,7 +1,14 @@
 import { createSelector } from 'reselect';
 
+/* 
+    I decided to use selectors because the state looks more cleaner,
+    i only select the specific state and dispatch it to the Home components,
+    calling will be done in homeContainer.js then dispatch to home.js,
+    You can define the same flow/function for other states in future 
+    and call it in the specific components holder
+*/
+
 export const getnotes = state => state.data
-//selector for get notes
 export const selected_getnotes = createSelector(
     getnotes,
     data => data
@@ -10,23 +17,5 @@ export const selected_getnotes = createSelector(
 //selector for create
 export const selected_createnote = createSelector(
     getnotes,
-    data => data.createnote // you can define here , which part of the init reducer you would like to have i.e data.getnotes
-)
-
-//selector for delete
-export const selected_deletenote = createSelector(
-    getnotes,
-    data => data.deletenote // you can define here , which part of the init reducer you would like to have i.e data.getnotes
-)
-
-//selector for update
-export const selected_updatenote = createSelector(
-    getnotes,
-    data => data.updatenote // you can define here , which part of the init reducer you would like to have i.e data.getnotes
-)
-
-//selector for update
-export const selected_searchnote = createSelector(
-    getnotes,
-    data => data.searchnote // you can define here , which part of the init reducer you would like to have i.e data.getnotes
+    data => data.createnote // Selecting the state which you would like to have i.e data.getnotes
 )

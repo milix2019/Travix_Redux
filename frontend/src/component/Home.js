@@ -2,7 +2,7 @@ import React, { useState, useEffect, Component } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import AddBox from './AddBox';
-import CardHolder from './CardHolder';
+import CardHolder from './Card/CardHolder';
 import axios from 'axios';
 
 const useStyles = makeStyles(theme => ({
@@ -16,10 +16,11 @@ const useStyles = makeStyles(theme => ({
 const HomeView = props => {
   const classes = useStyles();
   const [createData, setCreateData] = useState([]);
-  // useEffect(() => {
-  //   props.fetch_getnotes_data();
-  // }, []);
-  
+
+  /* 
+    Calling Ajax to create new Note,
+    then update the state to re-render the page
+  */
   const createNote = (title, note) => {
     axios.post('http://localhost:3003/api/tasks', {
       headers: {
@@ -31,7 +32,7 @@ const HomeView = props => {
         note: note
       }
     }).then(function (response) {
-      // handle success
+      // handle succes and update the states
       setCreateData(response.data.result[0]);
     }).catch(function (error) {
       // handle error
@@ -40,7 +41,7 @@ const HomeView = props => {
   }
   return (
     <Container maxWidth="sm" className={classes.root}>
-      <AddBox createNote={(title,note) => { createNote(title,note) }} {...props} />
+      <AddBox createNote={(title, note) => { createNote(title, note) }} {...props} />
       <CardHolder createData={createData} {...props} />
     </Container>
   );

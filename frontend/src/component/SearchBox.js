@@ -1,28 +1,12 @@
 import React, {useEffect} from 'react';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import IconButton from '@material-ui/core/IconButton';
-import Typography from '@material-ui/core/Typography';
 import InputBase from '@material-ui/core/InputBase';
 import { fade, makeStyles } from '@material-ui/core/styles';
-import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
 import Container from '@material-ui/core/Container';
 
 const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1,
-  },
-  menuButton: {
-    marginRight: theme.spacing(2),
-  },
-  title: {
-    flexGrow: 1,
-    display: 'none',
-    position:'absolute',
-    [theme.breakpoints.up('sm')]: {
-      display: 'block',
-    },
   },
   search: {
     position: 'relative',
@@ -68,15 +52,11 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const Navbar = props => {
-
-  console.log("navbar 0", props);
-
-  useEffect(() => {
-    console.log("navbar 1", props);
-  }, [props]);
-  
-
+/* 
+  This component is for searching thro the content
+  we pass the OnChange fucntion thro the props to the parents and then we update the state
+*/
+const SearchBox = props => {
   const classes = useStyles();
 
   return (
@@ -87,7 +67,7 @@ const Navbar = props => {
               </div>
               <InputBase
                   placeholder="Search Title or Content"
-                  onChange={(event)=>props.onSearch(event)}
+                  onChange={(event)=>props.onSearch(event)} //Here the props is being called
                   classes={{
                       root: classes.inputRoot,
                       input: classes.inputInput,
@@ -99,4 +79,4 @@ const Navbar = props => {
   );
 }
 
-export default Navbar;
+export default SearchBox;

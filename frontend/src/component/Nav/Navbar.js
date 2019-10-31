@@ -64,7 +64,7 @@ const Navbar = () => {
   const classes = useStyles();
 
   return (
-    <div className={classes.root}>
+    <div className={classes.root} data-test="headerComponent">
       <AppBar position="fixed" className={classes.appBar}>
         <Toolbar>
           <Typography className={classes.title} variant="h6" noWrap>

@@ -40,9 +40,9 @@ const HomeView = (props) => {
     });
   };
   return (
-    <Container maxWidth="sm" className={classes.root}>
-      <AddBox createNote={(title, note) => { createNote(title, note); }} {...props} />
-      <CardHolder createData={createData} {...props} />
+    <Container maxWidth="sm" className={classes.root} data-test="homeComponent">
+      <AddBox createNote={(title, note) => { createNote(title, note); }} {...props} data-test="addboxComponent" />
+      <CardHolder createData={createData} {...props} data-test="cardHolderComponent" />
     </Container>
   );
 };

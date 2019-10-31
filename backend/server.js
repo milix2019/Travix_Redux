@@ -27,7 +27,7 @@ const app = express();
 
 // Express configuration.
 app.set('host', process.env.HOST || 'localhost');
-app.set('port', process.env.PORT || 3000);
+app.set('port', process.env.PORT || 3003);
 app.use(compression());
 app.use(require('express-status-monitor')());
 

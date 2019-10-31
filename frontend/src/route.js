@@ -1,7 +1,7 @@
 import React from 'react';
 import {Switch, Route, BrowserRouter} from 'react-router-dom';
 import HomeView from './container/HomeContainer';
-import Navbar from './component/Navbar';
+import Navbar from './component/Nav/Navbar';
 
 class Routes extends React.Component {
     constructor(props){

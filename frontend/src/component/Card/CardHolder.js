@@ -170,7 +170,10 @@ class CardHolder extends React.Component {
 
 CardHolder.propTypes = {
   fetch_getnotes_data: PropTypes.func,
-  createData: PropTypes.any,
+  createData: PropTypes.arrayOf(PropTypes.shape({
+    title: PropTypes.string,
+    note: PropTypes.string,
+  })),
   getnotes: PropTypes.any,
 };
 

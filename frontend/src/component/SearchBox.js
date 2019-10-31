@@ -84,7 +84,7 @@ SearchBox.propTypes = {
 };
 
 SearchBox.defaultProps = {
-  onSearch: null,
+  onSearch: () => {},
 };
 
 export default SearchBox;

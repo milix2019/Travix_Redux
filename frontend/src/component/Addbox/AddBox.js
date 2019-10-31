@@ -5,7 +5,7 @@ import {
   ExpansionPanel, ExpansionPanelDetails, ExpansionPanelSummary, ExpansionPanelActions, Icon,
   Button, Divider, InputBase,
 } from '@material-ui/core';
-import Snackbar from './Snackbar';
+import Snackbar from '../Snackbar';
 
 /*
   This container will create the cards based on the close click ,
@@ -158,7 +158,7 @@ const AddBox = (props) => {
         </ExpansionPanelDetails>
         <Divider />
         <ExpansionPanelActions>
-          <Button size="small" onClick={(event) => { onCancelClick(event); }}>Close</Button>
+          <Button size="small" onClick={(event) => { onCancelClick(event); }} data-test="closeComponent">Close</Button>
         </ExpansionPanelActions>
       </ExpansionPanel>
     </div>
@@ -171,7 +171,7 @@ AddBox.propTypes = {
 };
 
 AddBox.defaultProps = {
-  createNote: null,
+  createNote: () => {},
 };
 
 export default AddBox;

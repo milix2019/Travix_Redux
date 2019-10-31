@@ -88,7 +88,7 @@ Snack.defaultProps = {
   snackFlag: null,
   message: null,
   hasAction: null,
-  onUndo: null,
+  onUndo: () => {},
 };
 
 export default Snack;

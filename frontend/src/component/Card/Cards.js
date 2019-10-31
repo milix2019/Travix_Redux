@@ -250,8 +250,8 @@ Cards.defaultProps = {
   title: null,
   note: null,
   id: number,
-  onUpdate: null,
-  onDelete: null,
+  onUpdate: () => {},
+  onDelete: () => {},
 };
 
 export default Cards;

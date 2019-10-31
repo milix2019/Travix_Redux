@@ -28,6 +28,8 @@ npm install
 
 ```
 npm start
+
+is running at http://localhost:3000 
 ```
 
 * sample output

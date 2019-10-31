@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 /*
     This is the shared (dynamic) component layout which being calling in afew part of the code
-    which is for OnDelete the note and give notification if its empty
+    which is for undo OnDelete the note and give notification if its empty
 */
 const Snack = (props) => {
   const { hasAction, onUndo } = props;
@@ -60,7 +60,7 @@ const Snack = (props) => {
           horizontal: 'center',
         }}
         open={open}
-        autoHideDuration={2000}
+        autoHideDuration={3000}
         onClose={handleClose}
         onExited={handleExited}
         ContentProps={{

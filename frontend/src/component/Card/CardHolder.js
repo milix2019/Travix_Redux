@@ -153,14 +153,14 @@ class CardHolder extends React.Component {
     && this.state.notesSearch.length === 0 ? this.state.notes : this.state.notesSearch;
     return (
       <div>
-        <SearchBox onSearch={this.onSearch} />
-        <Snackbar hasAction={this.state.hasAction} onUndo={this.onUndo} message="Are you sure?" snackFlag={this.state.snackFlag} />
+        <SearchBox onSearch={this.onSearch} data-test="searchboxComponent" />
+        <Snackbar hasAction={this.state.hasAction} onUndo={this.onUndo} message="Are you sure?" snackFlag={this.state.snackFlag} data-test="snackbarComponent" />
         { data !== undefined
         && data.length > 0
         && data.map((d) => {
           if (d !== undefined) {
             // eslint-disable-next-line max-len
-            return <Cards id={d.id} onDelete={this.onDelete} onUpdate={this.onUpdate} key={d.id} {...d} />;
+            return <Cards id={d.id} onDelete={this.onDelete} onUpdate={this.onUpdate} key={d.id} {...d} data-test="cardsComponent" />;
           }
         })}
       </div>
@@ -170,10 +170,7 @@ class CardHolder extends React.Component {
 
 CardHolder.propTypes = {
   fetch_getnotes_data: PropTypes.func,
-  createData: PropTypes.arrayOf(PropTypes.shape({
-    title: PropTypes.string,
-    note: PropTypes.string,
-  })),
+  createData: PropTypes.any,
   getnotes: PropTypes.any,
 };
 

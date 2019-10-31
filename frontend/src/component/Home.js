@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import axios from 'axios';
-import AddBox from './AddBox';
+import AddBox from './Addbox/AddBox';
 import CardHolder from './Card/CardHolder';
 
 const useStyles = makeStyles(() => ({

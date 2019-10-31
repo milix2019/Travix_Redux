@@ -50,6 +50,30 @@ npm run lint
 ✖ 3 problems (0 errors, 3 warnings)
 ```
 
+* Running Test ( Jest and Enzyme has been used in the application ) 
+
+
+```
+npm test
+```
+
+* sample output
+```
+ PASS  src/component/home.test.js (7.33s)
+ PASS  src/component/Addbox/addbox.test.js (7.973s)
+ PASS  src/component/Card/cardholder.test.js (8.103s)
+ PASS  src/action/homeaction.test.js    
+ PASS  src/reducer/homereducer.test.js  
+ PASS  src/component/Nav/navbar.test.js
+
+Test Suites: 6 passed, 6 total
+Tests:       15 passed, 15 total
+Snapshots:   0 total
+Time:        10.277s, estimated 11s
+Ran all test suites.
+
+Watch Usage: Press w to show more.
+```
 
 
 * Running/Building using Webpack

@@ -8,40 +8,17 @@ let idApp           = ''
 
 describe('Test API for module app', () => {
 
-    it('Login as SUPREME - POST - /api/admin/login', (done) => {     
-        chai.request(server)
-			.post('/api/admin/login')
-			.type('application/json')
-			.send({
-				"email" : "supreme@tractive.com.my",
-				"password": "welcome"
-			})
-        .then((res) => {
-			try {
-                expect(JSON.parse(res.text).success).to.be.true;            
-                expect(res).to.have.status(200);
-                if(JSON.parse(res.text).success) {
-                    tokenSupreme = JSON.parse(res.text).result[0].token;
-                }
-                done();   
-            } catch (error) {
-                throw error
-            }
-        }).catch(function(err){
-            done(err);
-        })
-    });
-
-    it('Create APP - POST - /api/app', (done) => {
+    it('Create Note - POST - /api/tasks', (done) => {
         chai.request(server)        
-        .post('/api/app')
-        .set('Authorization', "Bearer " + tokenSupreme.toString())
+        .post('/api/tasks')
+        .set('content-type', 'application/json')
         .send({
-            "name": "Unit App"
+            "title": "test title",
+            "note": "test note"
         })
-        .then((res) => {    
+        .then((res) => {
             try {
-                idApp = JSON.parse(res.text).result._id;
+                idApp = JSON.parse(res.text).result[0].id;
                 expect(JSON.parse(res.text).success).to.be.true;         
                 expect(res).to.have.status(200);
                 done();   
@@ -53,13 +30,13 @@ describe('Test API for module app', () => {
         });
     });
 
-    it('Read all APP - GET - /api/app', (done) => {
+    it('Read all Notes - GET - /api/tasks', (done) => {
         chai.request(server)        
-        .get('/api/app?pageIndex=0&limit=10')
-        .set('Authorization', "Bearer " + tokenSupreme.toString())
-        .then((res) => {    
+        .get('/api/tasks')
+        .set('content-type', 'application/json')
+        .then((res) => {
             try {
-                expect(JSON.parse(res.text).success).to.be.true;
+                expect(JSON.parse(res.text).success).to.be.true;         
                 expect(res).to.have.status(200);
                 done();   
             } catch (error) {
@@ -70,11 +47,11 @@ describe('Test API for module app', () => {
         });
     });
     
-    it('Read one APP - GET - /api/app/:idApp', (done) => {
+    it('Read One Note - GET - /api/tasks/:id', (done) => {
         chai.request(server)        
-        .get(`/api/app/${idApp}`)
-        .set('Authorization', "Bearer " + tokenSupreme.toString())
-        .then((res) => {    
+        .get(`/api/tasks/${idApp}`)
+        .set('content-type', 'application/json')
+        .then((res) => {
             try {
                 expect(JSON.parse(res.text).success).to.be.true;         
                 expect(res).to.have.status(200);
@@ -86,19 +63,20 @@ describe('Test API for module app', () => {
             done(err);
         });
     });
-
-    it('Update APP - PUT - /api/app/:idApp', (done) => {
+    
+    it('Update Note - PUT - /api/tasks/:id', (done) => {
         chai.request(server)        
-        .put(`/api/app/${idApp}`)
-        .set('Authorization', "Bearer " + tokenSupreme.toString())
+        .put(`/api/tasks/${idApp}`)
+        .set('content-type', 'application/json')
         .send({
-            "name": "Unit App Update"
+            "id":idApp,
+            "title": "test title modified updated",
+            "note": "test note modified updated"
         })
-        .then((res) => {    
+        .then((res) => {
             try {
                 expect(JSON.parse(res.text).success).to.be.true;         
                 expect(res).to.have.status(200);
-                expect(JSON.parse(res.text).result.name).to.equal('Unit App Update');
                 done();   
             } catch (error) {
                 throw error
@@ -107,5 +85,24 @@ describe('Test API for module app', () => {
             done(err);
         });
     });
-
+    
+    it('Delete Note - DELETE - /api/tasks/:id', (done) => {
+        chai.request(server)        
+        .delete(`/api/tasks/${idApp}`)
+        .set('content-type', 'application/json')
+        .send({
+            "id":idApp,
+        })
+        .then((res) => {
+            try {
+                expect(JSON.parse(res.text).success).to.be.true;         
+                expect(res).to.have.status(200);
+                done();   
+            } catch (error) {
+                throw error
+            }      
+        }).catch(function(err){
+            done(err);
+        });
+    });
 });

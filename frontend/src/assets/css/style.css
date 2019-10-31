@@ -1,0 +1,48 @@
+html, body{
+    margin: 0px;
+    padding:0px;
+}
+
+#root.selected > div:nth-child(2) > div:nth-child(2) > div,
+#root.selected > div:nth-child(2) > div:nth-child(1) {
+    display: none;
+}
+
+#root > div:nth-child(2) > div:nth-child(2) > div.fullscreen {
+    display: block;
+}
+
+
+#root > div:nth-child(2) > div:nth-child(2) > div:nth-child(n+2) > div {
+    z-index: 999;
+    opacity: 1;
+    transition: opacity 1.5s;
+    -webkit-transition: opacity 1.5s;
+
+    animation-duration: 1.5s;
+    -webkit-animation-duration: 1.5s;
+}
+
+@keyframes snackbar {
+    from {background-color: white;}
+    to {background-color: rgb(84, 159, 191);}
+}
+@-webkit-keyframes snackbar {
+    from {background-color: white;}
+    to {background-color: rgb(84, 159, 191);}
+}
+
+
+#root > div:nth-child(2) > div:nth-child(2) > div:first-child {
+    padding: 0.5em 1em;
+    position: fixed;
+    z-index: 9999;
+    top: 0px;
+    margin-left: -16px;
+}
+#root > div:nth-child(2) > div:nth-child(2) > div:first-child > div:first-child {
+    height: 45px;
+}
+#root > div:nth-child(2) > div:nth-child(2) > div:first-child input {
+    height: 33px;
+}

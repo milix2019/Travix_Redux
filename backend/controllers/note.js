@@ -54,12 +54,12 @@ exports.readAll = (req, res) => {
     logger(TAG + config.action.READ_ALL + " > " + tasks +":::" +JSON.stringify(tasks, null));
 
     if(searchString && tasks && tasks.length > 0) {
-        let searchRegex = new RegExp(searchString, "i");
-        searchString = {$or: [
-            {"q": searchRegex}
-        ]}
+        // let searchRegex = new RegExp(searchString, "i");
+        // searchString = {$or: [
+        //     {"q": searchRegex}
+        // ]}
 
-        tasks.filter((item) => (item.title === searchRegex || item.note === searchRegex));
+        tasks = tasks.filter((item) => (item.title === searchString || item.note === searchString));
     }
 
     if (tasks) {
